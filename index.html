@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de Vacunas Infantiles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+        label, input, button {
+            display: block;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #resultado {
+            margin-top: 30px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Calculadora de Vacunas Infantiles - Colombia</h2>
+    <form id="vacunaForm">
+        <label for="fechaNacimiento">Fecha de nacimiento del niño:</label>
+        <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+        <button type="submit">Calcular vacunas requeridas al 25 de julio de 2025</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        const esquemaVacunas = [
+            { etapa: "Recíen nacido", edadMeses: 0, vacunas: ["Tuberculosis B.C.G", "Hepatitis B"] },
+            { etapa: "2 Meses", edadMeses: 2, vacunas: ["Polio(Oral -IM)", "Pentavalente", "Rotavirus", "Neumococo"] },
+            { etapa: "4 Meses", edadMeses: 4, vacunas: ["Polio(Oral -IM)", "Pentavalente", "Rotavirus", "Neumococo"] },
+            { etapa: "6 Meses", edadMeses: 6, vacunas: ["Polio(Oral -IM)", "Pentavalente", "Influenza"] },
+            { etapa: "7 Meses", edadMeses: 7, vacunas: ["Refuerzo de Influenza"] },
+            { etapa: "12 Meses", edadMeses: 12, vacunas: ["Sarampion Rubéola Paperas(SRP)", "Fiebre Amarilla", "Neumococo", "Influenza", "Epatitis A"] },
+            { etapa: "18 Meses", edadMeses: 18, vacunas: ["Difteria Tosferina Tétano(DPT)", "Polio(Oral -IM) 1er Refuezo"] },
+            { etapa: "5 Años", edadMeses: 60, vacunas: ["Polio(Oral -IM) 2do Refuezo", "DPT ( 2do refuerzo)", "Sarampion Rubéola Paperas(SRP) refuerzo"] },
+            { etapa: "9 Años", edadMeses: 108, vacunas: ["Virus del Papiloma Humano (VPH)"] },
+            { etapa: "10 Años", edadMeses: 120, vacunas: ["Tétanos y Difteria", "Influenza anual", "COVID-19 anual"] }
+        ];
+
+        document.getElementById("vacunaForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const fechaNacimientoInput = document.getElementById("fechaNacimiento").value;
+            if (!fechaNacimientoInput) {
+                document.getElementById("resultado").innerHTML = "<p>Por favor ingresa una fecha válida.</p>";
+                return;
+            }
+
+            const fechaNacimiento = new Date(fechaNacimientoInput);
+            const fechaCorte = new Date("2025-07-25");
+
+            if (fechaNacimiento > fechaCorte) {
+                document.getElementById("resultado").innerHTML = "<p>La fecha de nacimiento no puede ser posterior al 25 de julio de 2025.</p>";
+                return;
+            }
+
+            // Calcular edad
+            let años = fechaCorte.getFullYear() - fechaNacimiento.getFullYear();
+            let meses = fechaCorte.getMonth() - fechaNacimiento.getMonth();
+            let dias = fechaCorte.getDate() - fechaNacimiento.getDate();
+
+            if (dias < 0) {
+                meses--;
+                const fechaTemp = new Date(fechaCorte.getFullYear(), fechaCorte.getMonth(), 0);
+                dias += fechaTemp.getDate();
+            }
+
+            if (meses < 0) {
+                años--;
+                meses += 12;
+            }
+
+            const edadMeses = años * 12 + meses;
+
+            // Construir resultado
+            let resultadoHTML = `<h3>Edad al 25 de julio de 2025:</h3>
+                                 <p>${años} años, ${meses} meses y ${dias} días</p>
+                                 <h3>Vacunas requeridas:</h3><ul>`;
+            esquemaVacunas.forEach(item => {
+                if (edadMeses >= item.edadMeses) {
+                    resultadoHTML += `<li><strong>${item.etapa}:</strong> ${item.vacunas.join(", ")}</li>`;
+                }
+            });
+            resultadoHTML += "</ul>";
+            document.getElementById("resultado").innerHTML = resultadoHTML;
+        });
+    </script>
+</body>
+</html>

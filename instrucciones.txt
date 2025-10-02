@@ -1,0 +1,13 @@
+INSTRUCCIONES DE USO
+
+Esta es una aplicación web local para calcular las vacunas que debe tener un niño en Colombia según su fecha de nacimiento y el esquema vigente al 25 de julio de 2025.
+
+Pasos para usarla:
+
+1. Extrae el contenido del archivo ZIP.
+2. Abre el archivo 'index.html' con doble clic o desde tu navegador favorito.
+3. Ingresa la fecha de nacimiento del niño.
+4. Haz clic en "Calcular vacunas requeridas al 25 de julio de 2025".
+5. Verás el listado de vacunas que debería tener aplicadas.
+
+No se requiere conexión a internet ni instalación de software adicional.
