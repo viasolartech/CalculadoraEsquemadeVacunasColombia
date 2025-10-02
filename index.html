@@ -48,7 +48,7 @@
     <form id="vacunaForm">
         <label for="fechaNacimiento">Fecha de nacimiento del niño:</label>
         <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
-        <button type="submit">Calcular vacunas requeridas al 25 de julio de 2025</button>
+        <button type="submit">Calcular vacunas requeridas al 25 de julio de 2025(Fecha de corte Ciclo 4-2025)</button>
     </form>
 
     <div id="resultado"></div>
@@ -79,7 +79,7 @@
             const fechaCorte = new Date("2025-07-25");
 
             if (fechaNacimiento > fechaCorte) {
-                document.getElementById("resultado").innerHTML = "<p>La fecha de nacimiento no puede ser posterior al 25 de julio de 2025.</p>";
+                document.getElementById("resultado").innerHTML = "<p>La fecha de nacimiento no puede ser posterior al 25 de julio de 2025.(Fecha de corte ciclo 4-2025)</p>";
                 return;
             }
 
